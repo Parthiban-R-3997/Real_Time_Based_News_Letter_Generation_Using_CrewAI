@@ -1,6 +1,11 @@
 import streamlit as st
 from datetime import datetime, timedelta
-from crew import NewsletterGenCrew
+from src.newsletter_gen.crew import NewsletterGenCrew
+import os
+import sys
+
+# Set the Python path to the src directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 
 class NewsletterGenUI:
 
@@ -51,7 +56,9 @@ class NewsletterGenUI:
                 Your team of AI agents will generate a newsletter for you!
                 """
             )
-
+            
+            anthropic_api_key = st.text_input("Enter your Anthropic API Key", type="password", help="Get your API key from [Anthropic Website](https://console.anthropic.com/settings/keys)")
+            os.environ["ANTHROPIC_API_KEY"] = str(anthropic_api_key)
             st.text_input("Topic", key="topic", placeholder="USA Stock Market")
             st.text_area(
                 "Your personal message (to include at the top of the newsletter)",
