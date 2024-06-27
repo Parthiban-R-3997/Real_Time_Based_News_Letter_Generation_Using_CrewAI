@@ -20,7 +20,6 @@ class NewsletterGenUI:
         return NewsletterGenCrew().crew().kickoff(inputs=inputs)
 
     def newsletter_generation(self):
-
         if st.session_state.generating:
             start_datetime, end_datetime = self.calculate_start_end_datetime()
             st.session_state.newsletter = self.generate_newsletter(
@@ -48,7 +47,7 @@ class NewsletterGenUI:
             st.title("Newsletter Generator")
             st.write(
                 """
-                To generate a newsletter, enter a topic, a personal message, and select a relative time duration. \n
+                To generate a newsletter, enter a topic, a personal message, and select the time duration. \n
                 Your team of AI agents will generate a newsletter for you!
                 """
             )
@@ -60,31 +59,25 @@ class NewsletterGenUI:
                 placeholder="Dear readers, welcome to the newsletter!",
             )
 
-            relative_time = st.text_input("Relative time duration (e.g., '1 day', '5 hours', '30 minutes')", key="relative_time")
-            st.write(f"You entered: {relative_time}")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.session_state.days = st.number_input("Days", min_value=0, max_value=30, value=0, step=1)
+            with col2:
+                st.session_state.hours = st.number_input("Hours", min_value=0, max_value=23, value=0, step=1)
+            with col3:
+                st.session_state.minutes = st.number_input("Minutes", min_value=0, max_value=59, value=0, step=1)
 
             if st.button("Generate Newsletter"):
                 st.session_state.generating = True
 
     def calculate_start_end_datetime(self):
-        relative_time_input = st.session_state.relative_time.strip().lower()
-        if 'day' in relative_time_input:
-            days = int(relative_time_input.split()[0])
-            start_datetime = datetime.now() - timedelta(days=days)
-            end_datetime = datetime.now()
-        elif 'hour' in relative_time_input:
-            hours = int(relative_time_input.split()[0])
-            start_datetime = datetime.now() - timedelta(hours=hours)
-            end_datetime = datetime.now()
-        elif 'minute' in relative_time_input:
-            minutes = int(relative_time_input.split()[0])
-            start_datetime = datetime.now() - timedelta(minutes=minutes)
-            end_datetime = datetime.now()
-        else:
-            # Default to 1 day if no valid input is provided
+        total_minutes = (st.session_state.days * 24 * 60) + (st.session_state.hours * 60) + st.session_state.minutes
+        if total_minutes == 0:
+            # Default to 1 day if no time is specified
             start_datetime = datetime.now() - timedelta(days=1)
-            end_datetime = datetime.now()
-
+        else:
+            start_datetime = datetime.now() - timedelta(minutes=total_minutes)
+        end_datetime = datetime.now()
         return start_datetime, end_datetime
 
     def render(self):
@@ -92,23 +85,21 @@ class NewsletterGenUI:
 
         if "topic" not in st.session_state:
             st.session_state.topic = ""
-
         if "personal_message" not in st.session_state:
             st.session_state.personal_message = ""
-
         if "newsletter" not in st.session_state:
             st.session_state.newsletter = ""
-
         if "generating" not in st.session_state:
             st.session_state.generating = False
-
-        if "relative_time" not in st.session_state:
-            st.session_state.relative_time = ""
+        if "days" not in st.session_state:
+            st.session_state.days = 0
+        if "hours" not in st.session_state:
+            st.session_state.hours = 0
+        if "minutes" not in st.session_state:
+            st.session_state.minutes = 0
 
         self.sidebar()
-
         self.newsletter_generation()
-
 
 if __name__ == "__main__":
     NewsletterGenUI().render()
