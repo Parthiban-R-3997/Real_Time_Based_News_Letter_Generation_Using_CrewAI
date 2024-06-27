@@ -1,6 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from newsletter_gen.tools.research import SearchAndContents, FindSimilar, GetContents
+from src.newsletter_gen.tools.research import SearchAndContents, FindSimilar, GetContents
 from datetime import datetime
 import streamlit as st
 from typing import Union, List, Tuple, Dict
@@ -15,8 +15,8 @@ import os
 class NewsletterGenCrew:
     """NewsletterGen crew"""
 
-    agents_config = "config/agents.yaml"
-    tasks_config = "config/tasks.yaml"
+    agents_config = "src/config/agents.yaml"
+    tasks_config = "src/config/tasks.yaml"
 
     def llm(self):
         llm = ChatAnthropic(model_name="claude-3-sonnet-20240620", max_tokens=4096)
