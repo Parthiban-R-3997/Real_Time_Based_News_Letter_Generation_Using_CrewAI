@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime, timedelta
-from src.newsletter_gen.crew import NewsletterGenCrew
+from newsletter_gen.crew import NewsletterGenCrew
 
 class NewsletterGenUI:
 
