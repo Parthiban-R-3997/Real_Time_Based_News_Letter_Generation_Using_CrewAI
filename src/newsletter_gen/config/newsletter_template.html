@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Newsletter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f4f8;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #004d66;
+        }
+        h2 {
+            margin: 0 0 10px 0;
+            color: #006680;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .grid-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .grid-item:nth-child(odd) {
+            background-color: #eef6f9;
+        }
+        .grid-item:nth-child(even) {
+            background-color: #e8f4f8;
+        }
+        .grid-item:hover {
+            background-color: #d1ecf3;
+            transition: background-color 0.3s ease;
+        }
+        .grid-item h2 {
+            color: #004d66;
+        }
+        .grid-item p {
+            margin-bottom: 10px;
+        }
+        .read-more {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .read-more a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .read-more a:hover {
+            text-decoration: underline;
+        }
+        .goodbye {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #004c99;
+        }
+
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><!-- TITLE OF THE DAY --></h1>
+        <p><!-- PERSONAL MESSAGE --></p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <h2>1. <!-- TITLE OF THE STORY --></h2>
+                <p><!-- SUMMARY OF THE STORY --></p>
+                <p><!-- WHY THIS IS IMPORTANT --></p>
+                <button onclick="window.open('https://www.example.com', '_blank')">Read Full Story</button>
+            </div>
+            <!-- ADD MORE GRID ITEMS HERE FOLLOWING THE SAME FORMAT -->
+        </div>
+        <p class="goodbye">Goodbye and see you until we meet!</p>
+    </div>
+</body>
+</html>
