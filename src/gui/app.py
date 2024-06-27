@@ -4,8 +4,6 @@ from src.newsletter_gen.crew import NewsletterGenCrew
 import os
 import sys
 
-# Set the Python path to the src directory
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 
 class NewsletterGenUI:
 
