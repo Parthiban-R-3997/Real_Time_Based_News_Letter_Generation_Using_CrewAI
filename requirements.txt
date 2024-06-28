@@ -1,5 +1,4 @@
 crewai
 crewai_tools
 langchain-anthropic
-langchain-community
 exa_py
