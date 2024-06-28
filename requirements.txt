@@ -1,4 +1,2 @@
-crewai
-crewai_tools
 langchain-anthropic
 exa_py
