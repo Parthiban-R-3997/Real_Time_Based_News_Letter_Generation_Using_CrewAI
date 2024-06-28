@@ -1,3 +1,2 @@
-langchain-anthropic
-exa_py
-crewai
+streamlit
+-e .
