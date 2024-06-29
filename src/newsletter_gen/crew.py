@@ -15,8 +15,8 @@ import os
 class NewsletterGenCrew:
     """NewsletterGen crew"""
 
-    agents_config = "src/newsletter_gen/config/agents.yaml"
-    tasks_config = "src/newsletter_gen/config/tasks.yaml"
+    agents_config = "agents.yaml"
+    tasks_config = "tasks.yaml"
 
     def llm(self):
         llm = ChatAnthropic(model_name="claude-3-sonnet-20240620", max_tokens=4096)
