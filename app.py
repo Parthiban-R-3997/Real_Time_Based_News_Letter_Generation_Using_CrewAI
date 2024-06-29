@@ -31,11 +31,12 @@ class NewsletterGenUI:
         if st.session_state.newsletter and st.session_state.newsletter != "":
             with st.container():
                 st.write("Newsletter generated successfully!")
+                current_date = datetime.now().strftime("%Y-%m-%d")
+                file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
                 st.download_button(
                     label="Download HTML file",
                     data=st.session_state.newsletter,
-                    current_date = datetime.now().strftime("%Y-%m-%d")
-                    file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
+                    file_name=file_name,
                     mime="text/html",
                 )
             st.session_state.generating = False
