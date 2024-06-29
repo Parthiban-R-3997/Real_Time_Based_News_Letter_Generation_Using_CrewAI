@@ -7,6 +7,7 @@ from typing import Union, List, Tuple, Dict
 from langchain_core.agents import AgentFinish
 import json
 from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 import os
 
@@ -19,7 +20,8 @@ class NewsletterGenCrew:
     tasks_config = "config/tasks.yaml"
 
     def llm(self):
-        llm = ChatAnthropic(model_name="claude-3-sonnet-20240620", max_tokens=4096)
+        #llm = ChatAnthropic(model_name="claude-3-sonnet-20240620", max_tokens=4096)
+        llm = ChatOpenAI(model_name="gpt-3.5-turbo")
         return llm
 
     def step_callback(

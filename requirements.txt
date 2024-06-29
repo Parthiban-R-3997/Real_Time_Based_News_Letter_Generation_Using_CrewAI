@@ -1,6 +1,7 @@
 crewai
 crewai_tools
 langchain-anthropic
+langchain-openai
 langchain-community
 exa_py
 pysqlite3-binary
