@@ -1,6 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from src.newsletter_gen.research import SearchAndContents, FindSimilar, GetContents
+from src.newsletter_gen.tools.research import SearchAndContents, FindSimilar, GetContents
 from datetime import datetime
 import streamlit as st
 from typing import Union, List, Tuple, Dict
