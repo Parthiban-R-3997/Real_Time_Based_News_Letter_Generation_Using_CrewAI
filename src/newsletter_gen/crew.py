@@ -20,8 +20,7 @@ class NewsletterGenCrew:
     tasks_config = "config/tasks.yaml"
 
     def llm(self):
-        #llm = ChatAnthropic(model_name="claude-3-sonnet-20240620", max_tokens=4096)
-        llm = ChatOpenAI(model_name="gpt-4o")
+        llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", max_tokens=4096)
         return llm
 
     def step_callback(
