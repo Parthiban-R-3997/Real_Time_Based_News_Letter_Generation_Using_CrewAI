@@ -16,6 +16,8 @@ class NewsletterGenUI:
         return html_template
 
     def generate_newsletter(self, topic, personal_message, start_datetime, end_datetime):
+        start_datetime_iso = start_datetime.isoformat()
+        end_datetime_iso = end_datetime.isoformat()
         inputs = {
             "topic": topic,
             "personal_message": personal_message,
