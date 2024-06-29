@@ -1,5 +1,7 @@
 import streamlit as st
 from src.newsletter_gen.crew import NewsletterGenCrew
+from datetime import datetime, timedelta
+
 
 
 class NewsletterGenUI:
@@ -32,7 +34,8 @@ class NewsletterGenUI:
                 st.download_button(
                     label="Download HTML file",
                     data=st.session_state.newsletter,
-                    file_name="newsletter.html",
+                    current_date = datetime.now().strftime("%Y-%m-%d")
+                    file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
                     mime="text/html",
                 )
             st.session_state.generating = False
