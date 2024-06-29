@@ -58,9 +58,9 @@ class NewsletterGenUI:
                 """
             )
             
-            anthropic_api_key = st.text_input("Enter your Anthropic API Key", type="password", help="Get your API key from [Anthropic Website](https://console.anthropic.com/settings/keys)")
-            os.environ["ANTHROPIC_API_KEY"] = str(anthropic_api_key)
-            st.text_input("Topic", key="topic", placeholder="USA Stock Market")
+            #anthropic_api_key = st.text_input("Enter your Anthropic API Key", type="password", help="Get your API key from [Anthropic Website](https://console.anthropic.com/settings/keys)")
+            #os.environ["ANTHROPIC_API_KEY"] = str(anthropic_api_key)
+            st.text_input("Topic", key="topic", placeholder="e.g; USA Stock Market")
             st.text_area(
                 "Your personal message (to include at the top of the newsletter)",
                 key="personal_message",
