@@ -28,7 +28,6 @@ class SearchAndContents(BaseTool):
             query=search_query,
             use_autoprompt=True,
             start_published_date=start_published_date,
-            end_published_date=end_published_date,
             text={"include_html_tags": False, "max_characters": 8000},
         )
 
@@ -58,7 +57,6 @@ class FindSimilar(BaseTool):
         search_results = exa.find_similar_and_contents(
             url=article_url,
             start_published_date=start_published_date,
-            end_published_date=end_published_date,
             text={"include_html_tags": False, "max_characters": 8000},
         )
 
