@@ -22,8 +22,8 @@ class NewsletterGenCrew:
     tasks_config = "config/tasks.yaml"
 
     def llm(self):
-        #llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620")
-        llm = ChatOpenAI(model_name="gpt-3.5-turbo")
+        llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620")
+        #llm = ChatOpenAI(model_name="gpt-3.5-turbo")
         return llm
 
     def step_callback(
