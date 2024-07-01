@@ -23,7 +23,7 @@ class NewsletterGenCrew:
 
     def llm(self):
         #llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620")
-        llm = ChatOpenAI(model_name="gpt-3.5-turbo")
+        llm = ChatOpenAI(model_name="gpt-4-turbo")
         return llm
 
     def step_callback(
