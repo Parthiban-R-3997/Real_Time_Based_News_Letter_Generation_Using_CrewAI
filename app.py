@@ -1,7 +1,5 @@
 import streamlit as st
-from src.newsletter_gen.crew import NewsletterGenCrew
-from datetime import datetime, timedelta
-
+from newsletter_gen.crew import NewsletterGenCrew
 
 
 class NewsletterGenUI:
@@ -12,10 +10,9 @@ class NewsletterGenUI:
 
         return html_template
 
-    def generate_newsletter(self, topic, days, personal_message):
+    def generate_newsletter(self, topic, personal_message):
         inputs = {
             "topic": topic,
-            "days":days,
             "personal_message": personal_message,
             "html_template": self.load_html_template(),
         }
@@ -25,15 +22,15 @@ class NewsletterGenUI:
 
         if st.session_state.generating:
             st.session_state.newsletter = self.generate_newsletter(
-                st.session_state.topic,st.session_state.days, st.session_state.personal_message
+                st.session_state.topic, st.session_state.personal_message
             )
 
         if st.session_state.newsletter and st.session_state.newsletter != "":
             with st.container():
-                st.write("Newsletter generated successfully!")
-                current_date = datetime.now().strftime("%Y-%m-%d")
-                file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
-                st.download_button(
+               st.write("Newsletter generated successfully!")
+               current_date = datetime.now().strftime("%Y-%m-%d")
+               file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
+               st.download_button(
                     label="Download HTML file",
                     data=st.session_state.newsletter,
                     file_name=file_name,
@@ -54,9 +51,6 @@ class NewsletterGenUI:
 
             st.text_input("Topic", key="topic", placeholder="USA Stock Market")
 
-            st.text_input("Enter the number of days for which you need the news", key="days", placeholder="e.g., 7")
-
-            
             st.text_area(
                 "Your personal message (to include at the top of the newsletter)",
                 key="personal_message",
@@ -74,9 +68,6 @@ class NewsletterGenUI:
 
         if "personal_message" not in st.session_state:
             st.session_state.personal_message = ""
-
-        if "days" not in st.session_state:
-            st.session_state.days = ""    
 
         if "newsletter" not in st.session_state:
             st.session_state.newsletter = ""

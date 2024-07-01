@@ -10,11 +10,11 @@ class SearchAndContents(BaseTool):
         "Searches the web based on a search query for the latest results. Results are only from the last week. Uses the Exa API. This also returns the contents of the search results."
     )
 
-    def _run(self, search_query: str,days:int) -> str:
+    def _run(self, search_query: str) -> str:
 
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
-        one_week_ago = datetime.now() - timedelta(days=days)
+        one_week_ago = datetime.now() - timedelta(days=2)
         date_cutoff = one_week_ago.strftime("%Y-%m-%d")
 
         search_results = exa.search_and_contents(
@@ -33,9 +33,9 @@ class FindSimilar(BaseTool):
         "Searches for similar articles to a given article using the Exa API. Takes in a URL of the article"
     )
 
-    def _run(self, article_url: str,days:int) -> str:
+    def _run(self, article_url: str) -> str:
 
-        one_week_ago = datetime.now() - timedelta(days=days)
+        one_week_ago = datetime.now() - timedelta(days=7)
         date_cutoff = one_week_ago.strftime("%Y-%m-%d")
 
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
