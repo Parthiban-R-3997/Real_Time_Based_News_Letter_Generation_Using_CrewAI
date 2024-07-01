@@ -1,7 +1,7 @@
 from crewai_tools import BaseTool
 from exa_py import Exa
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class SearchAndContents(BaseTool):
     name: str = "Search and Contents Tool"
@@ -20,6 +20,9 @@ class SearchAndContents(BaseTool):
             return "Invalid date format. Please use YYYY-MM-DD."
 
         end_published_date = datetime.now().strftime("%Y-%m-%d")
+
+        # Log the dates for debugging
+        print(f"Searching from {start_published_date} to {end_published_date}")
 
         search_results = exa.search_and_contents(
             query=search_query,
@@ -46,6 +49,9 @@ class FindSimilar(BaseTool):
             return "Invalid date format. Please use YYYY-MM-DD."
 
         end_published_date = datetime.now().strftime("%Y-%m-%d")
+
+        # Log the dates for debugging
+        print(f"Searching from {start_published_date} to {end_published_date}")
 
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
