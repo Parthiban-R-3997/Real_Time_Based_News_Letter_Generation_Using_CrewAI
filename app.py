@@ -1,36 +1,36 @@
 import streamlit as st
+from datetime import datetime
 from newsletter_gen.crew import NewsletterGenCrew
 
 
 class NewsletterGenUI:
-
+    
     def load_html_template(self):
         with open("src/newsletter_gen/config/newsletter_template.html", "r") as file:
             html_template = file.read()
-
         return html_template
 
-    def generate_newsletter(self, topic, personal_message):
+    def generate_newsletter(self, topic, personal_message, days):
         inputs = {
             "topic": topic,
             "personal_message": personal_message,
             "html_template": self.load_html_template(),
+            "days": days,
         }
         return NewsletterGenCrew().crew().kickoff(inputs=inputs)
 
     def newsletter_generation(self):
-
         if st.session_state.generating:
             st.session_state.newsletter = self.generate_newsletter(
-                st.session_state.topic, st.session_state.personal_message
+                st.session_state.topic, st.session_state.personal_message, st.session_state.days
             )
 
         if st.session_state.newsletter and st.session_state.newsletter != "":
             with st.container():
-               st.write("Newsletter generated successfully!")
-               current_date = datetime.now().strftime("%Y-%m-%d")
-               file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
-               st.download_button(
+                st.write("Newsletter generated successfully!")
+                current_date = datetime.now().strftime("%Y-%m-%d")
+                file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
+                st.download_button(
                     label="Download HTML file",
                     data=st.session_state.newsletter,
                     file_name=file_name,
@@ -44,7 +44,7 @@ class NewsletterGenUI:
 
             st.write(
                 """
-                To generate a newsletter, enter a topic and a personal message. \n
+                To generate a newsletter, enter a topic, a personal message, and the number of days to search for news. \n
                 Your team of AI agents will generate a newsletter for you!
                 """
             )
@@ -56,6 +56,8 @@ class NewsletterGenUI:
                 key="personal_message",
                 placeholder="Dear readers, welcome to the newsletter!",
             )
+
+            st.number_input("Number of days for news search", key="days", min_value=1, max_value=30, value=7)
 
             if st.button("Generate Newsletter"):
                 st.session_state.generating = True
@@ -74,6 +76,9 @@ class NewsletterGenUI:
 
         if "generating" not in st.session_state:
             st.session_state.generating = False
+
+        if "days" not in st.session_state:
+            st.session_state.days = 7
 
         self.sidebar()
 
