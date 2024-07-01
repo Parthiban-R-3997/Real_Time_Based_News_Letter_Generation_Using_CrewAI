@@ -90,5 +90,6 @@ class NewsletterGenUI:
         self.newsletter_generation()
 
 
+
 if __name__ == "__main__":
     NewsletterGenUI().render()

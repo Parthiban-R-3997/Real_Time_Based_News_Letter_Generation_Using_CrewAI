@@ -3,7 +3,6 @@ from exa_py import Exa
 import os
 from datetime import datetime, timedelta
 
-
 class SearchAndContents(BaseTool):
     name: str = "Search and Contents Tool"
     description: str = (
@@ -21,6 +20,7 @@ class SearchAndContents(BaseTool):
             query=search_query,
             use_autoprompt=True,
             start_published_date=date_cutoff,
+            end_published_date=datetime.now().strftime("%Y-%m-%d"),
             text={"include_html_tags": False, "max_characters": 8000},
         )
 
@@ -42,6 +42,7 @@ class FindSimilar(BaseTool):
         search_results = exa.find_similar_and_contents(
             url=article_url, 
             start_published_date=date_cutoff,
+            end_published_date=datetime.now().strftime("%Y-%m-%d"),
             text={"include_html_tags": False, "max_characters": 8000},
         )
 
@@ -55,8 +56,8 @@ class GetContents(BaseTool):
         "Takes in the ID of the article in a list, like this: ['https://www.cnbc.com/2024/04/18/my-news-story']."
     )
 
-    def _run(self, article_ids: str) -> str:
+    def _run(self, article_ids: list) -> str:
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
-        contents = exa.contents(article_ids)
+        contents = exa.contents(ids=article_ids)
         return contents
