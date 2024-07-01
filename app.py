@@ -9,25 +9,27 @@ class NewsletterGenUI:
             html_template = file.read()
         return html_template
 
-    def generate_newsletter(self, topic, personal_message, days):
-        # Calculate the date range
+    def generate_newsletter(self, topic, personal_message, start_date):
+        # Ensure the 'days' parameter is passed correctly
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=days)
+
+        # Debugging output
+        st.write(f"Generating newsletter starting from {start_date}.")
+        st.write(f"End date: {end_date.strftime('%Y-%m-%d')}")
         
         inputs = {
             "topic": topic,
             "personal_message": personal_message,
             "html_template": self.load_html_template(),
-            "start_date": start_date.strftime("%Y-%m-%d"),
+            "start_date": start_date,
             "end_date": end_date.strftime("%Y-%m-%d"),
         }
         return NewsletterGenCrew().crew().kickoff(inputs=inputs)
 
     def newsletter_generation(self):
         if st.session_state.generating:
-            # Pass the 'days' parameter from session state
             st.session_state.newsletter = self.generate_newsletter(
-                st.session_state.topic, st.session_state.personal_message, st.session_state.days
+                st.session_state.topic, st.session_state.personal_message, st.session_state.start_date
             )
 
         if st.session_state.newsletter and st.session_state.newsletter != "":
@@ -49,7 +51,7 @@ class NewsletterGenUI:
 
             st.write(
                 """
-                To generate a newsletter, enter a topic, a personal message, and the number of days to search for news. \n
+                To generate a newsletter, enter a topic, a personal message, and the start publish date for the news search. \n
                 Your team of AI agents will generate a newsletter for you!
                 """
             )
@@ -62,8 +64,8 @@ class NewsletterGenUI:
                 placeholder="Dear News Reader,",
             )
 
-            # Correctly update the 'days' parameter in the session state
-            st.number_input("Number of days for news search", key="days", min_value=1, max_value=30, value=7)
+            # Add a date input for the start publish date
+            st.date_input("Start publish date for news search", key="start_date", value=datetime.now() - timedelta(days=7))
 
             if st.button("Generate Newsletter"):
                 st.session_state.generating = True
@@ -83,12 +85,11 @@ class NewsletterGenUI:
         if "generating" not in st.session_state:
             st.session_state.generating = False
 
-        if "days" not in st.session_state:
-            st.session_state.days = 7  # Default value
+        if "start_date" not in st.session_state:
+            st.session_state.start_date = datetime.now() - timedelta(days=7)  # Default to 7 days ago
 
         self.sidebar()
         self.newsletter_generation()
-
 
 
 if __name__ == "__main__":

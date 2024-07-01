@@ -7,20 +7,25 @@ class SearchAndContents(BaseTool):
     name: str = "Search and Contents Tool"
     description: str = (
         "Searches the web based on a search query for the latest results. "
-        "Results are only from the custom days where user enters. Uses the Exa API. This also returns the contents of the search results."
+        "Results are only from the custom date range entered by the user. Uses the Exa API. This also returns the contents of the search results."
     )
 
-    def _run(self, search_query: str, days: int = 7) -> str:
+    def _run(self, search_query: str, start_date: str) -> str:
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
-        # Calculate the cutoff date based on the provided number of days
-        date_cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+        # Validate and format the start_date
+        try:
+            start_published_date = datetime.strptime(start_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+        except ValueError:
+            return "Invalid date format. Please use YYYY-MM-DD."
+
+        end_published_date = datetime.now().strftime("%Y-%m-%d")
 
         search_results = exa.search_and_contents(
             query=search_query,
             use_autoprompt=True,
-            start_published_date=date_cutoff,
-            end_published_date=datetime.now().strftime("%Y-%m-%d"),
+            start_published_date=start_published_date,
+            end_published_date=end_published_date,
             text={"include_html_tags": False, "max_characters": 8000},
         )
 
@@ -33,16 +38,21 @@ class FindSimilar(BaseTool):
         "Searches for similar articles to a given article using the Exa API. Takes in a URL of the article."
     )
 
-    def _run(self, article_url: str, days: int = 7) -> str:
-        # Calculate the cutoff date based on the provided number of days
-        date_cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+    def _run(self, article_url: str, start_date: str) -> str:
+        # Validate and format the start_date
+        try:
+            start_published_date = datetime.strptime(start_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+        except ValueError:
+            return "Invalid date format. Please use YYYY-MM-DD."
+
+        end_published_date = datetime.now().strftime("%Y-%m-%d")
 
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
         search_results = exa.find_similar_and_contents(
-            url=article_url, 
-            start_published_date=date_cutoff,
-            end_published_date=datetime.now().strftime("%Y-%m-%d"),
+            url=article_url,
+            start_published_date=start_published_date,
+            end_published_date=end_published_date,
             text={"include_html_tags": False, "max_characters": 8000},
         )
 
