@@ -39,9 +39,10 @@ class FindSimilar(BaseTool):
 
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
-        search_results = exa.find_similar(
+        search_results = exa.find_similar_and_contents(
             url=article_url, 
-            start_published_date=date_cutoff
+            start_published_date=date_cutoff,
+            text={"include_html_tags": False, "max_characters": 8000},
         )
 
         return search_results

@@ -1,26 +1,31 @@
 import streamlit as st
-from datetime import datetime
-from src.newsletter_gen.crew import NewsletterGenCrew
-
+from datetime import datetime, timedelta
+from newsletter_gen.crew import NewsletterGenCrew
 
 class NewsletterGenUI:
-    
+
     def load_html_template(self):
         with open("src/newsletter_gen/config/newsletter_template.html", "r") as file:
             html_template = file.read()
         return html_template
 
     def generate_newsletter(self, topic, personal_message, days):
+        # Calculate the date range
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=days)
+        
         inputs = {
             "topic": topic,
             "personal_message": personal_message,
             "html_template": self.load_html_template(),
-            "days": days,
+            "start_date": start_date.strftime("%Y-%m-%d"),
+            "end_date": end_date.strftime("%Y-%m-%d"),
         }
         return NewsletterGenCrew().crew().kickoff(inputs=inputs)
 
     def newsletter_generation(self):
         if st.session_state.generating:
+            # Pass the 'days' parameter from session state
             st.session_state.newsletter = self.generate_newsletter(
                 st.session_state.topic, st.session_state.personal_message, st.session_state.days
             )
@@ -49,14 +54,15 @@ class NewsletterGenUI:
                 """
             )
 
-            st.text_input("Topic", key="topic", placeholder="USA Stock Market")
+            st.text_input("Topic", key="topic", placeholder="World News")
 
             st.text_area(
                 "Your personal message (to include at the top of the newsletter)",
                 key="personal_message",
-                placeholder="Dear readers, welcome to the newsletter!",
+                placeholder="Dear News Reader,",
             )
 
+            # Correctly update the 'days' parameter in the session state
             st.number_input("Number of days for news search", key="days", min_value=1, max_value=30, value=7)
 
             if st.button("Generate Newsletter"):
@@ -78,10 +84,9 @@ class NewsletterGenUI:
             st.session_state.generating = False
 
         if "days" not in st.session_state:
-            st.session_state.days = 7
+            st.session_state.days = 7  # Default value
 
         self.sidebar()
-
         self.newsletter_generation()
 
 
