@@ -2,9 +2,9 @@ crewai
 crewai_tools
 langchain-anthropic
 langchain-openai
-langchain_google_genai
+langchain-google-genai
 langchain-community
 exa_py
 langtrace-python-sdk
-#pysqlite3-binary
+pysqlite3-binary
 
