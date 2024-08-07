@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import datetime, timedelta
 from src.newsletter_gen.crew import NewsletterGenCrew
+from crewai.crews.crew_output import CrewOutput
 
 class NewsletterGenUI:
 
@@ -10,10 +11,8 @@ class NewsletterGenUI:
         return html_template
 
     def generate_newsletter(self, topic, personal_message, start_date):
-        # Ensure the 'days' parameter is passed correctly
         end_date = datetime.now()
 
-        # Debugging output
         st.write(f"Generating newsletter starting from {start_date}.")
         st.write(f"End date: {end_date.strftime('%Y-%m-%d')}")
         
@@ -24,17 +23,37 @@ class NewsletterGenUI:
             "start_date": start_date,
             "end_date": end_date.strftime("%Y-%m-%d"),
         }
-        return NewsletterGenCrew().crew().kickoff(inputs=inputs)
+        crew_output = NewsletterGenCrew().crew().kickoff(inputs=inputs)
+        
+        # Extract content from CrewOutput
+        if isinstance(crew_output, CrewOutput):
+            # Inspect the structure of crew_output
+            st.write("CrewOutput structure:")
+            st.write(crew_output)
+            
+            # Try to access the content (adjust this based on the actual structure)
+            if hasattr(crew_output, 'content'):
+                return crew_output.content
+            elif hasattr(crew_output, 'output'):
+                return crew_output.output
+            else:
+                # If we can't find the content, return the string representation
+                return str(crew_output)
+        
+        return str(crew_output)  # Fallback to string representation if not CrewOutput
 
     def newsletter_generation(self):
         if st.session_state.generating:
-            st.session_state.newsletter = self.generate_newsletter(
+            newsletter_content = self.generate_newsletter(
                 st.session_state.topic, st.session_state.personal_message, st.session_state.start_date
             )
+            st.session_state.newsletter = newsletter_content
 
         if st.session_state.newsletter and st.session_state.newsletter != "":
             with st.container():
                 st.write("Newsletter generated successfully!")
+                st.markdown(st.session_state.newsletter, unsafe_allow_html=True)
+                
                 current_date = datetime.now().strftime("%Y-%m-%d")
                 file_name = f"{st.session_state.topic}_newsletter_{current_date}.html"
                 st.download_button(
@@ -44,6 +63,7 @@ class NewsletterGenUI:
                     mime="text/html",
                 )
             st.session_state.generating = False
+
 
     def sidebar(self):
         with st.sidebar:

@@ -9,7 +9,7 @@ research_task:
     - Do not include sources that are not a news article. If the content of the page includes a list of articles or looks like the front page of a website, do not include it in the list!
     - Summarize the news in a few sentences. Make the summary as long as necessary to include all the relevant information, but not too long for a newsletter.
     - Include the URL of the article where you found the news.
-    - Include a minimum of 7 news articles and a maximum of 10 news articles in the list.
+    - Include a minimum of 4 news articles and a maximum of 5 news articles in the list.
     - When using the Search Tool, your search query should be concise and include the date range (for example, "latest news on {topic} from {start_date} to {end_date}").
 
     IMPORTANT INSTRUCTIONS ABOUT USING TOOLS: When using tools, DO NOT ESCAPE the underscore character "_", EVER. If you need to use a tool and pass in a parameter called 'search_query', you should write 'search_query', not 'search\_query'. THIS IS VERY IMPORTANT, else the tool will not work.
