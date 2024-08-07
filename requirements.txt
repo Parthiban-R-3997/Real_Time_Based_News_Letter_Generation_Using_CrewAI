@@ -6,5 +6,5 @@ langchain_google_genai
 langchain-community
 exa_py
 langtrace-python-sdk
-pysqlite3-binary
+#pysqlite3-binary
 

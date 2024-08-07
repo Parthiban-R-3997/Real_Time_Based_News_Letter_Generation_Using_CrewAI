@@ -42,7 +42,7 @@ class NewsletterGenCrew:
     tasks_config = "config/tasks.yaml"
 
     def llm(self):
-        return ChatGoogleGenerativeAI(model="gemini-1.5-pro")
+        return ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 
     def step_callback(
         self,
