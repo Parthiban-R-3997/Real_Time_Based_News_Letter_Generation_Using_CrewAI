@@ -8,6 +8,7 @@ from typing import Union, List, Tuple, Dict
 from langchain_core.agents import AgentFinish
 import json
 from langchain_google_genai import ChatGoogleGenerativeAI
+import langtrace_python_sdk.instrumentation.crewai.patch as langtrace_patch
 from langtrace_python_sdk import langtrace
 
 
@@ -22,7 +23,6 @@ class DateTimeEncoder(json.JSONEncoder):
         return super().default(obj)
 
 # Monkey patch json.dumps in langtrace_python_sdk
-import langtrace_python_sdk.instrumentation.crewai.patch as langtrace_patch
 original_json_dumps = json.dumps
 
 def custom_json_dumps(*args, **kwargs):
